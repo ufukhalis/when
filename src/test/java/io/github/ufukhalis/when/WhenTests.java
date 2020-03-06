@@ -2,11 +2,13 @@ package io.github.ufukhalis.when;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.parallel.Execution;
 import org.junit.jupiter.api.parallel.ExecutionMode;
 
 import java.util.Optional;
 
+@ExtendWith(TimingExtension.class)
 @Execution(ExecutionMode.CONCURRENT)
 public class WhenTests {
 
@@ -64,5 +66,37 @@ public class WhenTests {
                 .condition(i -> i == 30).thenReturn(i -> i + 2).execute();
 
         Assertions.assertFalse(result.isPresent());
+    }
+
+    @Test
+    void whenThereAreManyCondition_thenReturnMatch() {
+        Integer integer = 10;
+
+        Optional<Integer> result = When.of(integer)
+                .condition(i -> i == 30).thenReturn(i -> i + 1)
+                .condition(i -> i == 30).thenReturn(i -> i + 2)
+                .condition(i -> i == 30).thenReturn(i -> i + 2)
+                .condition(i -> i == 30).thenReturn(i -> i + 2)
+                .condition(i -> i == 30).thenReturn(i -> i + 2)
+                .condition(i -> i == 30).thenReturn(i -> i + 2)
+                .condition(i -> i == 30).thenReturn(i -> i + 2)
+                .condition(i -> i == 30).thenReturn(i -> i + 2)
+                .condition(i -> i == 30).thenReturn(i -> i + 2)
+                .condition(i -> i == 30).thenReturn(i -> i + 2)
+                .condition(i -> i == 30).thenReturn(i -> i + 2)
+                .condition(i -> i == 30).thenReturn(i -> i + 2)
+                .condition(i -> i == 30).thenReturn(i -> i + 2)
+                .condition(i -> i == 30).thenReturn(i -> i + 2)
+                .condition(i -> i == 30).thenReturn(i -> i + 2)
+                .condition(i -> i == 30).thenReturn(i -> i + 2)
+                .condition(i -> i == 30).thenReturn(i -> i + 2)
+                .condition(i -> i == 30).thenReturn(i -> i + 2)
+                .condition(i -> i == 30).thenReturn(i -> i + 2)
+                .condition(i -> i == 30).thenReturn(i -> i + 2)
+                .condition(i -> i == 30).thenReturn(i -> i + 2)
+                .condition(i -> i == 10).thenReturn(i -> i + 2)
+                .execute();
+
+        Assertions.assertTrue(result.isPresent());
     }
 }
