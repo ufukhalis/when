@@ -6,7 +6,7 @@
 
     <groupId>io.github.ufukhalis</groupId>
     <artifactId>when</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.2</version>
     <name>when</name>
     <description>Simple Pattern Matching</description>
     <url>https://github.com/ufukhalis/when</url>
@@ -57,6 +57,9 @@
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <source>8</source>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
