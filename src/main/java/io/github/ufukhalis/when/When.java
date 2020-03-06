@@ -21,7 +21,7 @@ public final class When <W> {
         return new Case<>(predicate, this.object, null);
     }
 
-    protected static final class Case<C> {
+    public static final class Case<C> {
 
         private final Predicate<? super C> predicate;
         private final C object;
@@ -42,7 +42,7 @@ public final class When <W> {
 
     }
 
-    protected static final class Return<R, V> {
+    public static final class Return<R, V> {
 
         private final Supplier<R> supplier;
         private final V object;
