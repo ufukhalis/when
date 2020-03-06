@@ -35,9 +35,9 @@ public final class When <W> {
 
         public <R> Return<R, C> thenReturn(Function<? super C, ? extends R> mapper) {
             if (object != null && predicate.test(object)) {
-                return new Return<>(mapper, this.object, prev);
+                return new Return<R, C>(mapper, this.object, prev);
             }
-            return new Return<>(null, this.object, prev);
+            return new Return<R, C>(null, this.object, prev);
         }
 
     }
