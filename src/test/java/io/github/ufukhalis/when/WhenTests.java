@@ -2,13 +2,18 @@ package io.github.ufukhalis.when;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.parallel.Execution;
+import org.junit.jupiter.api.parallel.ExecutionMode;
 
 import java.util.Optional;
 
+@Execution(ExecutionMode.CONCURRENT)
 public class WhenTests {
 
     @Test
     void whenConditionExecuted_thenReturnCorrectMatch() {
+        System.out.println(Thread.currentThread().getName());
+
         Integer integer = 10;
 
         Optional<Integer> result = When.of(integer)
@@ -21,6 +26,8 @@ public class WhenTests {
 
     @Test
     void whenMultipleConditionMatched_thenReturnFirstMatch() {
+        System.out.println(Thread.currentThread().getName());
+
         Integer integer = 10;
 
         Optional<Integer> result = When.of(integer)
@@ -35,6 +42,8 @@ public class WhenTests {
 
     @Test
     void whenExecuteNotCalled_thenNoResultExpected() {
+        System.out.println(Thread.currentThread().getName());
+
         Integer integer = 10;
 
         When.Return<Object, Integer> result = When.of(integer)
@@ -46,6 +55,8 @@ public class WhenTests {
 
     @Test
     void whenNoConditionMatched_thenReturnEmptyResult() {
+        System.out.println(Thread.currentThread().getName());
+
         Integer integer = 10;
 
         Optional<Integer> result = When.of(integer)
