@@ -6,7 +6,7 @@
 
     <groupId>io.github.ufukhalis</groupId>
     <artifactId>when</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
     <name>when</name>
     <description>Simple Pattern Matching</description>
     <url>https://github.com/ufukhalis/when</url>
