@@ -58,7 +58,20 @@ public final class When <W> {
             return new Case<>(predicate, this.object, this);
         }
 
+        public R getOrElseGet(Supplier<? extends R> supplier) {
+            return toOptional().orElseGet(supplier);
+        }
+
+        public R getOrElse(R other) {
+            return toOptional().orElse(other);
+        }
+
+        @Deprecated
         public Optional<R> execute() {
+            return toOptional();
+        }
+
+        public Optional<R> toOptional() {
             return Optional.ofNullable(execute(this, this.supplier));
         }
 
