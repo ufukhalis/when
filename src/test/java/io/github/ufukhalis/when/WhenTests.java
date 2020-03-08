@@ -20,7 +20,7 @@ public class WhenTests {
 
         Optional<Integer> result = When.of(integer)
                 .condition(i -> i == 10).thenReturn(i -> i + 1)
-                .condition(i -> i == 20).thenReturn(i -> i + 2).execute();
+                .condition(i -> i == 20).thenReturn(i -> i + 2).toOptional();
 
         Assertions.assertTrue(result.isPresent());
         Assertions.assertEquals(11, result.get());
@@ -36,7 +36,7 @@ public class WhenTests {
                 .condition(i -> i == 10).thenReturn(i -> i + 1)
                 .condition(i -> i == 10).thenReturn(i -> i + 2)
                 .condition(i -> i == 20).thenReturn(i -> i + 3)
-                .execute();
+                .toOptional();
 
         Assertions.assertTrue(result.isPresent());
         Assertions.assertEquals(11, result.get());
@@ -63,7 +63,7 @@ public class WhenTests {
 
         Optional<Integer> result = When.of(integer)
                 .condition(i -> i == 20).thenReturn(i -> i + 1)
-                .condition(i -> i == 30).thenReturn(i -> i + 2).execute();
+                .condition(i -> i == 30).thenReturn(i -> i + 2).toOptional();
 
         Assertions.assertFalse(result.isPresent());
     }
@@ -95,8 +95,38 @@ public class WhenTests {
                 .condition(i -> i == 30).thenReturn(i -> i + 2)
                 .condition(i -> i == 30).thenReturn(i -> i + 2)
                 .condition(i -> i == 10).thenReturn(i -> i + 2)
-                .execute();
+                .toOptional();
 
         Assertions.assertTrue(result.isPresent());
+    }
+
+    @Test
+    void whenNoMatch_thenOrElseGetShouldWork() {
+        Integer integer = 10;
+
+        Integer result = When.of(integer)
+                .condition(i -> i == 11).thenReturn(i -> i + 1)
+                .condition(i -> i == 12).thenReturn(i -> i + 1)
+                .condition(i -> i == 13).thenReturn(i -> i + 1)
+                .condition(i -> i == 14).thenReturn(i -> i + 1)
+                .condition(i -> i == 15).thenReturn(i -> i + 1)
+                .getOrElseGet(() -> 10);
+
+        Assertions.assertEquals(10, result);
+    }
+
+    @Test
+    void whenNoMatch_thenOrElseShouldWork() {
+        Integer integer = 10;
+
+        Integer result = When.of(integer)
+                .condition(i -> i == 11).thenReturn(i -> i + 1)
+                .condition(i -> i == 12).thenReturn(i -> i + 1)
+                .condition(i -> i == 13).thenReturn(i -> i + 1)
+                .condition(i -> i == 14).thenReturn(i -> i + 1)
+                .condition(i -> i == 15).thenReturn(i -> i + 1)
+                .getOrElse(10);
+
+        Assertions.assertEquals(10, result);
     }
 }

@@ -4,11 +4,12 @@
 WHEN
 =======
 
-`WHEN` is a simple pattern matching library which uses Java 8+ in the background and
-does'nt have any other dependency to other libs.
+`WHEN` is a simple matching library which uses Java 8+ in the background and
+doesn't have any other dependency on other libs.
 
 
 How to Use
+-------------
 
 Firstly, you should add latest `WHEN` dependency to your project.
 
@@ -16,11 +17,11 @@ Firstly, you should add latest `WHEN` dependency to your project.
 <dependency>
     <groupId>io.github.ufukhalis</groupId>
     <artifactId>when</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.3</version>
 </dependency>
 ```
 
-Then, we can easily build when conditions like below. `WHEN` won't work until you call the `execute`
+Then, we can easily build when conditions like below. `WHEN` won't work until you call the `toOptional`
 method.
 
 ```$xslt
@@ -28,7 +29,7 @@ method.
 Optional<Integer> result = When.of(integer)
                 .condition(i -> i == 10).thenReturn(i -> i + 1)
                 .condition(i -> i == 20).thenReturn(i -> i + 2)
-                .execute();
+                .toOptional();
 
 ```
 
