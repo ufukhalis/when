@@ -17,6 +17,10 @@ public final class When <W> {
         return new When<>(object);
     }
 
+    public static <T> When<T> of(Optional<T> object) {
+        return new When<>(object.orElse(null));
+    }
+
     public When.Case<W> condition(Predicate<? super W> predicate) {
         return new Case<>(predicate, this.object, null);
     }

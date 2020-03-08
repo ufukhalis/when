@@ -35,6 +35,40 @@ Optional<Integer> result = When.of(integer)
 
 If there is no match the optional value will be empty.
 
+You can also pass `Optional`.
+
+```$xslt
+
+Optional<Integer> result = When.of(Optional.of(10))
+                .condition(i -> i == 12).thenReturn(i -> i + 1)
+                .condition(i -> i == 11).thenReturn(i -> i + 1)
+                .condition(i -> i == 10).thenReturn(i -> i + 1)
+                .toOptional();
+
+```
+
+And also you can use other methods to trigger pipeline such as `getOrElse` or `getOrElseGet`.
+
+```$xslt
+
+Integer result = When.of(integer)
+                .condition(i -> i == 11).thenReturn(i -> i + 1)
+                .condition(i -> i == 12).thenReturn(i -> i + 1)
+                .condition(i -> i == 13).thenReturn(i -> i + 1)
+                .getOrElseGet(() -> 10);
+
+```
+
+```$xslt
+
+Integer result = When.of(integer)
+                .condition(i -> i == 11).thenReturn(i -> i + 1)
+                .condition(i -> i == 12).thenReturn(i -> i + 1)
+                .condition(i -> i == 13).thenReturn(i -> i + 1)
+                .getOrElse(10);
+
+```
+
 License
 ------------
 All code in this repository is licensed under the Apache License, Version 2.0. See [LICENCE](./LICENSE).
