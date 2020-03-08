@@ -129,4 +129,28 @@ public class WhenTests {
 
         Assertions.assertEquals(10, result);
     }
+
+    @Test
+    void whenOptionalPassAndMatched_thenReturnMatch() {
+        Optional<Integer> result = When.of(Optional.of(10))
+                .condition(i -> i == 12).thenReturn(i -> i + 1)
+                .condition(i -> i == 11).thenReturn(i -> i + 1)
+                .condition(i -> i == 10).thenReturn(i -> i + 1)
+                .toOptional();
+
+        Assertions.assertTrue(result.isPresent());
+        Assertions.assertEquals(11, result.get());
+    }
+
+    @Test
+    void whenOptionalNullPassAndNotMatched_thenReturnEmpty() {
+        Optional<Integer> result = When.of(Optional.<Integer>empty())
+                .condition(i -> i == 12).thenReturn(i -> i + 1)
+                .condition(i -> i == 11).thenReturn(i -> i + 1)
+                .condition(i -> i == 10).thenReturn(i -> i + 1)
+                .toOptional();
+
+        Assertions.assertFalse(result.isPresent());
+    }
+
 }
