@@ -13,7 +13,7 @@ public class MonoWhen<W> {
         this.object = object;
     }
 
-    public static <T> MonoWhen<T> of(Mono<T> object) {
+    static <T> MonoWhen<T> of(Mono<T> object) {
         return new MonoWhen<>(object);
     }
 

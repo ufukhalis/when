@@ -19,40 +19,27 @@ public class WhenTests {
         Integer integer = 10;
 
         Optional<Integer> result = When.of(integer)
-                .condition(i -> i == 10).thenReturn(i -> i + 1)
-                .condition(i -> i == 20).thenReturn(i -> i + 2).toOptional();
+                .condition(i -> i == 10, i -> i + 1)
+                .condition(i -> i == 20, i -> i + 2).toOptional();
 
         Assertions.assertTrue(result.isPresent());
         Assertions.assertEquals(11, result.get());
     }
 
     @Test
-    void whenMultipleConditionMatched_thenReturnFirstMatch() {
+    void whenMultipleConditionMatched_thenReturnLastMatch() {
         System.out.println(Thread.currentThread().getName());
 
         Integer integer = 10;
 
         Optional<Integer> result = When.of(integer)
-                .condition(i -> i == 10).thenReturn(i -> i + 1)
-                .condition(i -> i == 10).thenReturn(i -> i + 2)
-                .condition(i -> i == 20).thenReturn(i -> i + 3)
+                .condition(i -> i == 10, i -> i + 1)
+                .condition(i -> i == 10, i -> i + 2)
+                .condition(i -> i == 20, i -> i + 3)
                 .toOptional();
 
         Assertions.assertTrue(result.isPresent());
-        Assertions.assertEquals(11, result.get());
-    }
-
-    @Test
-    void whenExecuteNotCalled_thenNoResultExpected() {
-        System.out.println(Thread.currentThread().getName());
-
-        Integer integer = 10;
-
-        When.Return<Object, Integer> result = When.of(integer)
-                .condition(i -> i == 10).thenReturn(i -> i + 1)
-                .condition(i -> i == 20).thenReturn(i -> i + 2);
-
-        Assertions.assertFalse(result.getClass().isAssignableFrom(Optional.class));
+        Assertions.assertEquals(12, result.get());
     }
 
     @Test
@@ -62,8 +49,8 @@ public class WhenTests {
         Integer integer = 10;
 
         Optional<Integer> result = When.of(integer)
-                .condition(i -> i == 20).thenReturn(i -> i + 1)
-                .condition(i -> i == 30).thenReturn(i -> i + 2).toOptional();
+                .condition(i -> i == 20, i -> i + 1)
+                .condition(i -> i == 30, i -> i + 2).toOptional();
 
         Assertions.assertFalse(result.isPresent());
     }
@@ -73,28 +60,12 @@ public class WhenTests {
         Integer integer = 10;
 
         Optional<Integer> result = When.of(integer)
-                .condition(i -> i == 30).thenReturn(i -> i + 1)
-                .condition(i -> i == 30).thenReturn(i -> i + 2)
-                .condition(i -> i == 30).thenReturn(i -> i + 2)
-                .condition(i -> i == 30).thenReturn(i -> i + 2)
-                .condition(i -> i == 30).thenReturn(i -> i + 2)
-                .condition(i -> i == 30).thenReturn(i -> i + 2)
-                .condition(i -> i == 30).thenReturn(i -> i + 2)
-                .condition(i -> i == 30).thenReturn(i -> i + 2)
-                .condition(i -> i == 30).thenReturn(i -> i + 2)
-                .condition(i -> i == 30).thenReturn(i -> i + 2)
-                .condition(i -> i == 30).thenReturn(i -> i + 2)
-                .condition(i -> i == 30).thenReturn(i -> i + 2)
-                .condition(i -> i == 30).thenReturn(i -> i + 2)
-                .condition(i -> i == 30).thenReturn(i -> i + 2)
-                .condition(i -> i == 30).thenReturn(i -> i + 2)
-                .condition(i -> i == 30).thenReturn(i -> i + 2)
-                .condition(i -> i == 30).thenReturn(i -> i + 2)
-                .condition(i -> i == 30).thenReturn(i -> i + 2)
-                .condition(i -> i == 30).thenReturn(i -> i + 2)
-                .condition(i -> i == 30).thenReturn(i -> i + 2)
-                .condition(i -> i == 30).thenReturn(i -> i + 2)
-                .condition(i -> i == 10).thenReturn(i -> i + 2)
+                .condition(i -> i == 30, i -> i + 1)
+                .condition(i -> i == 30, i -> i + 2)
+                .condition(i -> i == 30, i -> i + 2)
+                .condition(i -> i == 30, i -> i + 2)
+                .condition(i -> i == 30, i -> i + 2)
+                .condition(i -> i == 10, i -> i + 2)
                 .toOptional();
 
         Assertions.assertTrue(result.isPresent());
@@ -105,11 +76,11 @@ public class WhenTests {
         Integer integer = 10;
 
         Integer result = When.of(integer)
-                .condition(i -> i == 11).thenReturn(i -> i + 1)
-                .condition(i -> i == 12).thenReturn(i -> i + 1)
-                .condition(i -> i == 13).thenReturn(i -> i + 1)
-                .condition(i -> i == 14).thenReturn(i -> i + 1)
-                .condition(i -> i == 15).thenReturn(i -> i + 1)
+                .condition(i -> i == 11, i -> i + 1)
+                .condition(i -> i == 12, i -> i + 1)
+                .condition(i -> i == 13, i -> i + 1)
+                .condition(i -> i == 14, i -> i + 1)
+                .condition(i -> i == 15, i -> i + 1)
                 .getOrElseGet(() -> 10);
 
         Assertions.assertEquals(10, result);
@@ -120,11 +91,11 @@ public class WhenTests {
         Integer integer = 10;
 
         Integer result = When.of(integer)
-                .condition(i -> i == 11).thenReturn(i -> i + 1)
-                .condition(i -> i == 12).thenReturn(i -> i + 1)
-                .condition(i -> i == 13).thenReturn(i -> i + 1)
-                .condition(i -> i == 14).thenReturn(i -> i + 1)
-                .condition(i -> i == 15).thenReturn(i -> i + 1)
+                .condition(i -> i == 11, i -> i + 1)
+                .condition(i -> i == 12, i -> i + 1)
+                .condition(i -> i == 13, i -> i + 1)
+                .condition(i -> i == 14, i -> i + 1)
+                .condition(i -> i == 15, i -> i + 1)
                 .getOrElse(10);
 
         Assertions.assertEquals(10, result);
@@ -133,9 +104,9 @@ public class WhenTests {
     @Test
     void whenOptionalPassAndMatched_thenReturnMatch() {
         Optional<Integer> result = When.of(Optional.of(10))
-                .condition(i -> i == 12).thenReturn(i -> i + 1)
-                .condition(i -> i == 11).thenReturn(i -> i + 1)
-                .condition(i -> i == 10).thenReturn(i -> i + 1)
+                .condition(i -> i == 12, i -> i + 1)
+                .condition(i -> i == 11, i -> i + 1)
+                .condition(i -> i == 10, i -> i + 1)
                 .toOptional();
 
         Assertions.assertTrue(result.isPresent());
@@ -145,9 +116,9 @@ public class WhenTests {
     @Test
     void whenOptionalNullPassAndNotMatched_thenReturnEmpty() {
         Optional<Integer> result = When.of(Optional.<Integer>empty())
-                .condition(i -> i == 12).thenReturn(i -> i + 1)
-                .condition(i -> i == 11).thenReturn(i -> i + 1)
-                .condition(i -> i == 10).thenReturn(i -> i + 1)
+                .condition(i -> i == 12, i -> i + 1)
+                .condition(i -> i == 11, i -> i + 1)
+                .condition(i -> i == 10, i -> i + 1)
                 .toOptional();
 
         Assertions.assertFalse(result.isPresent());

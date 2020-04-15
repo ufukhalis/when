@@ -4,8 +4,7 @@
 WHEN
 =======
 
-`WHEN` is a simple matching library which uses Java 8+ in the background and
-doesn't have any other dependency on other libs.
+`WHEN` is a simple matching library which only needs Java 8+ version.
 
 
 How to Use
@@ -17,7 +16,7 @@ Firstly, you should add latest `WHEN` dependency to your project.
 <dependency>
     <groupId>io.github.ufukhalis</groupId>
     <artifactId>when</artifactId>
-    <version>0.0.5</version>
+    <version>0.0.6</version>
 </dependency>
 ```
 
@@ -27,8 +26,8 @@ method.
 ```$xslt
 
 Optional<Integer> result = When.of(integer)
-                .condition(i -> i == 10).thenReturn(i -> i + 1)
-                .condition(i -> i == 20).thenReturn(i -> i + 2)
+                .condition(i -> i == 10, i -> i + 1)
+                .condition(i -> i == 20, i -> i + 2)
                 .toOptional();
 
 ```
@@ -40,9 +39,9 @@ You can also pass `Optional`.
 ```$xslt
 
 Optional<Integer> result = When.of(Optional.of(10))
-                .condition(i -> i == 12).thenReturn(i -> i + 1)
-                .condition(i -> i == 11).thenReturn(i -> i + 1)
-                .condition(i -> i == 10).thenReturn(i -> i + 1)
+                .condition(i -> i == 12, i -> i + 1)
+                .condition(i -> i == 11, i -> i + 1)
+                .condition(i -> i == 10, i -> i + 1)
                 .toOptional();
 
 ```
@@ -52,9 +51,9 @@ And also you can use other methods to trigger pipeline such as `getOrElse` or `g
 ```$xslt
 
 Integer result = When.of(integer)
-                .condition(i -> i == 11).thenReturn(i -> i + 1)
-                .condition(i -> i == 12).thenReturn(i -> i + 1)
-                .condition(i -> i == 13).thenReturn(i -> i + 1)
+                .condition(i -> i == 11, i -> i + 1)
+                .condition(i -> i == 12, i -> i + 1)
+                .condition(i -> i == 13, i -> i + 1)
                 .getOrElseGet(() -> 10);
 
 ```
@@ -62,26 +61,25 @@ Integer result = When.of(integer)
 ```$xslt
 
 Integer result = When.of(integer)
-                .condition(i -> i == 11).thenReturn(i -> i + 1)
-                .condition(i -> i == 12).thenReturn(i -> i + 1)
-                .condition(i -> i == 13).thenReturn(i -> i + 1)
+                .condition(i -> i == 11, i -> i + 1)
+                .condition(i -> i == 12, i -> i + 1)
+                .condition(i -> i == 13, i -> i + 1)
                 .getOrElse(10);
 
 ```
 
-`When` project has also reactor `Mono` type support. You can use `MonoWhen` type to create
-multiple conditions.
+`When` project has also reactor `Mono` type support. 
 
 ```$xslt
 
-Mono<Integer> result = MonoWhen.of(Mono.just(10))
+Mono<Integer> result = When.of(Mono.just(10))
                 .condition(i -> i == 10, i -> 1)
                 .condition(i -> i == 20, i -> 2)
-        .execute();
+                .execute();
 
 ```
 
-Important Note : If there are multiple match for `MonoWhen`, it will return the last match. 
+Important Note : If there are multiple match for `When`, it will return the last match. 
 But it won't execute previous matches.
 
 License
