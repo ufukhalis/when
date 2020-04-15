@@ -69,6 +69,21 @@ Integer result = When.of(integer)
 
 ```
 
+`When` project has also reactor `Mono` type support. You can use `MonoWhen` type to create
+multiple conditions.
+
+```$xslt
+
+Mono<Integer> result = MonoWhen.of(Mono.just(10))
+                .condition(i -> i == 10, i -> 1)
+                .condition(i -> i == 20, i -> 2)
+        .execute();
+
+```
+
+Important Note : If there are multiple match for `MonoWhen`, it will return the last match. 
+But it won't execute previous matches.
+
 License
 ------------
 All code in this repository is licensed under the Apache License, Version 2.0. See [LICENCE](./LICENSE).
