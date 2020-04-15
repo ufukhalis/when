@@ -16,7 +16,7 @@ public class MonoWhenTests {
     void whenConditionMatched_thenRunCorrectMapper() {
         System.out.println(Thread.currentThread().getName());
 
-        Mono<Integer> result = MonoWhen.of(Mono.just(10))
+        Mono<Integer> result = When.of(Mono.just(10))
                 .condition(i -> i == 10, i -> 1)
                 .condition(i -> i == 20, i -> 2)
         .execute();
@@ -29,7 +29,7 @@ public class MonoWhenTests {
     void whenMultipleConditionMatched_thenRunLastMapper() {
         System.out.println(Thread.currentThread().getName());
 
-        Mono<Integer> result = MonoWhen.of(Mono.just(10))
+        Mono<Integer> result = When.of(Mono.just(10))
                 .condition(i -> i == 10, i -> i + 1)
                 .condition(i -> i == 10, i -> i + 2)
                 .condition(i -> i == 20, i -> i + 3)
@@ -44,7 +44,7 @@ public class MonoWhenTests {
         System.out.println(Thread.currentThread().getName());
 
 
-        Mono<Integer> result = MonoWhen.of(Mono.just(10))
+        Mono<Integer> result = When.of(Mono.just(10))
                 .condition(i -> i == 20, i -> i + 1)
                 .condition(i -> i == 30, i -> i + 2)
                 .execute();

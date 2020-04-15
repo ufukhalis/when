@@ -1,99 +1,24 @@
 package io.github.ufukhalis.when;
 
+import reactor.core.publisher.Mono;
+
 import java.util.Optional;
-import java.util.function.Function;
-import java.util.function.Predicate;
-import java.util.function.Supplier;
 
-public final class When <W> {
+public final class When {
 
-    private final W object;
-
-    private When(W object) {
-        this.object = object;
+    private When() {
     }
 
-    public static <T> When<T> of(T object) {
-        return new When<>(object);
+    public static <T> NormalWhen<T> of(T object) {
+        return NormalWhen.of(object);
     }
 
-    public static <T> When<T> of(Optional<T> object) {
-        return new When<>(object.orElse(null));
+    public static <T> NormalWhen<T> of(Optional<T> object) {
+        return NormalWhen.of(object);
     }
 
-    public When.Case<W> condition(Predicate<? super W> predicate) {
-        return new Case<>(predicate, this.object, null);
+    public static <T> MonoWhen<T> of(Mono<T> object) {
+        return MonoWhen.of(object);
     }
 
-    public static final class Case<C> {
-
-        private final Predicate<? super C> predicate;
-        private final C object;
-        private final Return prev;
-
-        private Case(Predicate<? super C> predicate, C object, Return<?, C> prev) {
-            this.prev = prev;
-            this.predicate = predicate;
-            this.object = object;
-        }
-
-        public <R> Return<R, C> thenReturn(Function<? super C, ? extends R> mapper) {
-            if (object != null && predicate.test(object)) {
-                return new Return<R, C>(mapper, this.object, prev);
-            }
-            return new Return<R, C>(null, this.object, prev);
-        }
-
-    }
-
-    public static final class Return<R, V> {
-
-        private final Supplier<R> supplier;
-        private final V object;
-        private final Return<R, V> prev;
-
-        private Return(Function<? super V, ? extends R> mapper, V o, Return<R, V> prev) {
-            this.prev = prev;
-            this.object = o;
-            this.supplier = mapper != null ? () ->  mapper.apply(o) : null;
-        }
-
-        public When.Case<V> condition(Predicate<? super V> predicate) {
-            return new Case<>(predicate, this.object, this);
-        }
-
-        public R getOrElseGet(Supplier<? extends R> supplier) {
-            return toOptional().orElseGet(supplier);
-        }
-
-        public R getOrElse(R other) {
-            return toOptional().orElse(other);
-        }
-
-        @Deprecated
-        public Optional<R> execute() {
-            return toOptional();
-        }
-
-        public Optional<R> toOptional() {
-            return Optional.ofNullable(execute(this, this.supplier));
-        }
-
-        private R execute(Return<R, V> current, Supplier<R> supplier) {
-
-            if (current.supplier != null) {
-                supplier = current.supplier;
-            }
-
-            if (current.prev != null) {
-                return execute(current.prev, supplier);
-            }
-
-            if(supplier != null) {
-                return supplier.get();
-            }
-
-            return null;
-        }
-    }
 }
