@@ -29,7 +29,6 @@ Optional<Integer> result = When.of(integer)
                 .condition(i -> i == 10, i -> i + 1)
                 .condition(i -> i == 20, i -> i + 2)
                 .toOptional();
-
 ```
 
 If there is no match the optional value will be empty.
