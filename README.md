@@ -29,7 +29,6 @@ Optional<Integer> result = When.of(integer)
                 .condition(i -> i == 10, i -> i + 1)
                 .condition(i -> i == 20, i -> i + 2)
                 .toOptional();
-
 ```
 
 If there is no match the optional value will be empty.
@@ -43,7 +42,6 @@ Optional<Integer> result = When.of(Optional.of(10))
                 .condition(i -> i == 11, i -> i + 1)
                 .condition(i -> i == 10, i -> i + 1)
                 .toOptional();
-
 ```
 
 And also you can use other methods to trigger pipeline such as `getOrElse` or `getOrElseGet`.
